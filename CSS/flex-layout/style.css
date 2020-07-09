@@ -1,0 +1,62 @@
+.flexbox {
+    width: 90%;
+    margin: 5%;
+    background: #999999;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    align-items: stretch;
+}
+
+.flexelement {
+    background: #ff6600;
+    color: #ffffff;
+    text-align: center;
+    width: 24%;
+    margin: 1% 0 1% 0;
+    padding: 15px 0 15px 0;
+}
+
+/* increases the width of the flexelement for 
+    responsive design. It will wrap the content in two rows */
+
+.flexbox2 {
+    width: 90%;
+    margin: 5%;
+    background: #999999;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+.flexelement2 {
+    background: #ff6600;
+    color: #ffffff;
+    text-align: center;
+    width: 35%;
+    margin: 1% 0 1% 0;
+    padding: 15px 0 15px 0;
+}
+
+/* one row */
+
+.flexbox3 {
+    width: 90%;
+    margin: 5%;
+    background: #999999;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+.flexelement3 {
+    background: #ff6600;
+    color: #ffffff;
+    text-align: center;
+    width: 55%;
+    margin: 1% 0 1% 0;
+    padding: 15px 0 15px 0;
+}

@@ -1,0 +1,50 @@
+body {
+    padding: 0;
+    margin: 0;
+    font-family: sans-serif;
+    background: #000000;
+}
+
+.skewed_box {
+    padding: 100px 0;
+    background: #6075a1;
+    transform: skew(0deg, -10deg) translateY(-120px);
+}
+
+.inbox_container {
+    padding: 150px 200px;
+    transform: skew(0deg, 10deg);
+}
+
+.inbox_container h1 {
+    margin: 0;
+    padding: 20px 0;
+    font-size: 3rem;
+}
+
+.inbox_container p {
+    font-size: 1rem;
+    margin: 0;
+    padding: 0;
+    line-height: 1.5rem;
+    width: 80%;
+}
+
+.skewed_box2 {
+    padding: 0 200px 150px;
+    color: #ffffff;
+    text-align: right;
+}
+
+.skewed_box2 h1 {
+    margin: 0;
+    padding: 20px 0;
+    font-size: 3rem;
+}
+
+.skewed_box2 p {
+    font-size: 1rem;
+    margin: 0;
+    padding: 0;
+    line-height: 1.5rem;
+}

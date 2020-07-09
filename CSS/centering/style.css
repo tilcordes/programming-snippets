@@ -1,0 +1,76 @@
+body,
+html {
+  margin: 0;
+  padding: 0 0 200px 0;
+  width: 100%;
+  height: 100%;
+}
+
+.box {
+  width: 90%;
+  height: 500px;
+  float: left;
+  position: relative;
+  margin: 5% 5% 0 5%;
+  background: #dadada;
+  background-size: cover;
+}
+.box h2 {
+  text-transform: uppercase;
+  position: absolute;
+  top: 15px;
+  left: 40px;
+  font-family: "Oswald", sans-serif;
+  line-height: 25px;
+  font-weight: 700;
+  text-align: left;
+}
+.box h2 span {
+  font-size: 15px;
+  color: #ff6600;
+  font-weight: 500;
+}
+.box div {
+  color: #fff;
+  background: #111;
+  width: 250px;
+  height: 50px;
+  padding: 10px 30px 10px 30px;
+  text-align: center;
+}
+
+/* IMPORTANT*/
+
+#box1 {
+  text-align: center;
+}
+#box1 div {
+  display: inline-block;
+  margin: 200px 0 0 0;
+}
+
+#box2 div {
+  margin: 200px auto 0 auto;
+}
+
+#box3 div {
+  margin: 200px 0 0 -155px;
+  position: absolute;
+  left: 50%;
+}
+
+#box4 div {
+  position: absolute;
+  left: 50%;
+  -webkit-transform: translateX(-50%);
+  transform: translateX(-50%);
+  margin: 200px 0 0 0;
+}
+
+#box5 div {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  -webkit-transform: translateX(-50%) translateY(-50%);
+  transform: translateX(-50%) translateY(-50%);
+}
