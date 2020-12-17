@@ -30,6 +30,9 @@ def basics():
     # executes a command on the console
     os.system('shutdown -s -t 3600')
 
+    # uses enviroment values
+    print(os.environ.get('TEST'))
+
 def os_Walk():
     # goes trough all directories in the path and lists the files and directories within the directory
     for dirpath, dirnames, filenames in os.walk('C:/Users/Max Mustermann/Desktop'):
