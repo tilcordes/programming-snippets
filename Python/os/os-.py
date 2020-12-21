@@ -33,6 +33,9 @@ def basics():
     # uses enviroment values
     print(os.environ.get('TEST'))
 
+    # generates random bytes like '\xcb\xd2\x1a\xd5$\xac\x18\x7fa\xbb'
+    print(os.urandom(10))
+
 def os_Walk():
     # goes trough all directories in the path and lists the files and directories within the directory
     for dirpath, dirnames, filenames in os.walk('C:/Users/Max Mustermann/Desktop'):
