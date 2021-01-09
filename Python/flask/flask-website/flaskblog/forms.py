@@ -6,10 +6,10 @@ from flaskblog.models import User
 from flask_login import current_user
 
 class RegistrationForm(FlaskForm):
-    username = StringField('Username', validators=[DataRequired(), Length(min=2, max=20)])
-    email = StringField('Email', validators=[DataRequired(), Email()])
+    username = StringField('Username', validators=[DataRequired(), Length(min=2, max=20)]) # DataRequired makes sure something is typed in; Length makes sure that the input has the correct length
+    email = StringField('Email', validators=[DataRequired(), Email()]) # Email makes sure that the user has typed in an real email
     password = PasswordField('Password', validators=[DataRequired()])
-    confirm_password = PasswordField('Confirm Password', validators=[DataRequired(), EqualTo('password')])
+    confirm_password = PasswordField('Confirm Password', validators=[DataRequired(), EqualTo('password')]) # EqualTo makes sure that the input is equal to 'password'
     submit = SubmitField('Sign Up')
 
     def validate_username(self, username):
@@ -31,7 +31,7 @@ class LoginForm(FlaskForm):
 class UpdateAccountForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired(), Length(min=2, max=20)])
     email = StringField('Email', validators=[DataRequired(), Email()])
-    picture = FileField('Update Profile Picture', validators=[FileAllowed(['jpg', 'png'])])
+    picture = FileField('Update Profile Picture', validators=[FileAllowed(['jpg', 'png'])]) # FileAllowed makes sure only allowed filetypes get uploaded
     submit = SubmitField('Update')
 
     def validate_username(self, username):

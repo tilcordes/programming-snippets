@@ -47,7 +47,7 @@
   <main role="main" class="container">
     <div class="row">
       <div class="col-md-8">
-        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% with messages = get_flashed_messages(with_categories=true) %} <!-- shows flashed messages; 'with_categories' allows to use the class of the flash like 'success' or 'danger'-->
           {% if messages %}
             {% for category, message in messages %}
               <div class="alert alert-{{ category }}">

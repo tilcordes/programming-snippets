@@ -13,13 +13,13 @@ from flask_mail import Message
 def home():
     page = request.args.get('page', 1, type=int)
     posts = Post.query.order_by(Post.date_posted.desc()).paginate(page=page, per_page=5)
-    return render_template('home.html', title='Home', posts=posts)
+    return render_template('home.html', title='Home', posts=posts) # renders the template 'home.html' and provides the variables 'title' and 'posts' for the template
 
 @app.route('/about')
 def about():
     return render_template('about.html', title='About')
 
-@app.route('/register', methods=['GET', 'POST'])
+@app.route('/register', methods=['GET', 'POST']) # 'methods' makes sure that only allowed methods get submitted
 def register():
     if current_user.is_authenticated:
         return redirect(url_for('home'))
@@ -29,7 +29,7 @@ def register():
         user = User(username=form.username.data, email=form.email.data, password=hashed_password)
         db.session.add(user)
         db.session.commit()
-        flash('Your account has been created! You are now able to log in', 'success')
+        flash('Your account has been created! You are now able to log in', 'success') # send a message to the template with the category 'success'
         return redirect(url_for('login'))
     return render_template('register.html', title='Register', form=form)
 
