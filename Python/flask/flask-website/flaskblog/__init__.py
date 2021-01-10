@@ -6,9 +6,9 @@ from flask_login import LoginManager
 from flask_mail import Mail
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = '0e066fcc4927d09f2357bb5c5db69d6b'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
-db = SQLAlchemy(app)
+app.config['SECRET_KEY'] = '0e066fcc4927d09f2357bb5c5db69d6b' # is necessary to make sessions work
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db' # path to the SQLite database
+db = SQLAlchemy(app) # initiating SQLAlchemy
 bcrypt = Bcrypt(app)
 login_manager = LoginManager(app)
 login_manager.login_view = 'login'
