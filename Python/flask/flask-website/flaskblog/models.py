@@ -7,7 +7,7 @@ from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 def load_user(user_id):
     return User.query.get(int(user_id))
 
-class User(db.Model, UserMixin):
+class User(db.Model, UserMixin): # 'db.Model' creates the SQLAlchemy Model; UserMixin is important for flask_login to make the login system work (UserMixin provides funcions like 'is_authenticated' for flask_login)
     id = db.Column(db.Integer, primary_key=True) # 'primary_key' provides a unique id for each column
     username = db.Column(db.String(20), unique=True, nullable=False) # 'unique' makes sure that the username is only one time stored in the database; 'nullable' ensures that the entry is not null
     email = db.Column(db.String(120), unique=True, nullable=False)

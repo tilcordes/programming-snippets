@@ -12,12 +12,12 @@ class RegistrationForm(FlaskForm):
     confirm_password = PasswordField('Confirm Password', validators=[DataRequired(), EqualTo('password')]) # EqualTo makes sure that the input is equal to 'password'
     submit = SubmitField('Sign Up')
 
-    def validate_username(self, username):
+    def validate_username(self, username): # gets executed automatically when the form gets submitted and checks if the username already exists
         user = User.query.filter_by(username=username.data).first()
         if user:
             raise ValidationError('That username is taken. Please choose a different one.')
 
-    def validate_email(self, email):
+    def validate_email(self, email): # gets executed automatically when the form gets submitted and checks if the email already exists
         user = User.query.filter_by(email=email.data).first()
         if user:
             raise ValidationError('That email is taken. Please choose a different one.')
@@ -34,13 +34,13 @@ class UpdateAccountForm(FlaskForm):
     picture = FileField('Update Profile Picture', validators=[FileAllowed(['jpg', 'png'])]) # FileAllowed makes sure only allowed filetypes get uploaded
     submit = SubmitField('Update')
 
-    def validate_username(self, username):
+    def validate_username(self, username): # gets executed automatically when the form gets submitted and checks if the username already exists
         if username.data != current_user.username:
             user = User.query.filter_by(username=username.data).first()
             if user:
                 raise ValidationError('That username is taken. Please choose a different one.')
 
-    def validate_email(self, email):
+    def validate_email(self, email): # gets executed automatically when the form gets submitted and checks if the email already exists
         if email.data != current_user.email:
             user = User.query.filter_by(email=email.data).first()
             if user:
