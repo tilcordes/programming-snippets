@@ -71,17 +71,17 @@ def save_picture(form_picture):
 def account():
     form = UpdateAccountForm()
     if form.validate_on_submit(): # gets executed when the form gets submitted
-        if form.picture.data: # only gets executed if profile picture was submitted
+        if form.picture.data: # only gets executed if profile picture was uploaded
             picture_file = save_picture(form.picture.data) # saves the profile picture
-            current_user.image_file = picture_file # updadetes the profile picture
+            current_user.image_file = picture_file # updates the profile picture
         current_user.username = form.username.data # updates the username
         current_user.email = form.email.data # updates the email
         db.session.commit() # stores the updated data in the database
         flash('Your account has been updated!', 'success') # send a message to the template with the category 'success'
         return redirect(url_for('account'))
     elif request.method == 'GET': # is needed when the site gets reloaded
-        form.username.data = current_user.username # puts in the current username to the form
-        form.email.data = current_user.email # puts the current email to the form
+        form.username.data = current_user.username # puts the current username into the form
+        form.email.data = current_user.email # puts the current email into the form
     image_file = url_for('static', filename='profile_pics/' + current_user.image_file) # profil picture of the user
     return render_template('account.html', title='Account', image_file=image_file, form=form)
 
