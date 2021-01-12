@@ -34,13 +34,13 @@ class UpdateAccountForm(FlaskForm):
     picture = FileField('Update Profile Picture', validators=[FileAllowed(['jpg', 'png'])]) # FileAllowed makes sure only allowed filetypes get uploaded
     submit = SubmitField('Update')
 
-    def validate_username(self, username): # gets executed automatically when the form gets submitted and checks if the username already exists
+    def validate_username(self, username): # gets executed automatically when the form gets submitted and checks if the username is different to the current one
         if username.data != current_user.username:
             user = User.query.filter_by(username=username.data).first()
             if user:
                 raise ValidationError('That username is taken. Please choose a different one.')
 
-    def validate_email(self, email): # gets executed automatically when the form gets submitted and checks if the email already exists
+    def validate_email(self, email): # gets executed automatically when the form gets submitted and checks if the email is different to the current one
         if email.data != current_user.email:
             user = User.query.filter_by(email=email.data).first()
             if user:

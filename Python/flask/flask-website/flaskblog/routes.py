@@ -54,39 +54,39 @@ def logout():
     return redirect(url_for('home'))
 
 def save_picture(form_picture):
-    random_hex = secrets.token_hex(8)
-    f_name, f_ext = os.path.splitext(form_picture.filename)
-    picture_filename = random_hex + f_ext
-    picture_path = os.path.join(app.root_path, 'static/profile_pics', picture_filename)
+    random_hex = secrets.token_hex(8) # generates a random hex with 8 digits
+    f_name, f_ext = os.path.splitext(form_picture.filename) # splits the filename to the name and the extension ('filename' + 'png')
+    picture_filename = random_hex + f_ext # connects the extension to the random hex
+    picture_path = os.path.join(app.root_path, 'static/profile_pics', picture_filename) # generates the path of the profile picture
 
     output_size = (50, 50)
-    i = Image.open(form_picture)
-    i.thumbnail(output_size)
+    i = Image.open(form_picture) # opens the uploaded picture
+    i.thumbnail(output_size) # resizes the picture
 
-    i.save(picture_path)
-    return picture_filename
+    i.save(picture_path) # saves the picture with the new filename
+    return picture_filename # returns the filename
 
 @app.route('/account', methods=['POST', 'GET'])
-@login_required
+@login_required # route can only be accesed when the user is logged in
 def account():
     form = UpdateAccountForm()
-    if form.validate_on_submit():
-        if form.picture.data:
-            picture_file = save_picture(form.picture.data)
-            current_user.image_file = picture_file
-        current_user.username = form.username.data
-        current_user.email = form.email.data
-        db.session.commit()
-        flash('Your account has been updated!', 'success')
+    if form.validate_on_submit(): # gets executed when the form gets submitted
+        if form.picture.data: # only gets executed if profile picture was submitted
+            picture_file = save_picture(form.picture.data) # saves the profile picture
+            current_user.image_file = picture_file # updadetes the profile picture
+        current_user.username = form.username.data # updates the username
+        current_user.email = form.email.data # updates the email
+        db.session.commit() # stores the updated data in the database
+        flash('Your account has been updated!', 'success') # send a message to the template with the category 'success'
         return redirect(url_for('account'))
-    elif request.method == 'GET':
-        form.username.data = current_user.username
-        form.email.data = current_user.email
-    image_file = url_for('static', filename='profile_pics/' + current_user.image_file)
+    elif request.method == 'GET': # is needed when the site gets reloaded
+        form.username.data = current_user.username # puts in the current username to the form
+        form.email.data = current_user.email # puts the current email to the form
+    image_file = url_for('static', filename='profile_pics/' + current_user.image_file) # profil picture of the user
     return render_template('account.html', title='Account', image_file=image_file, form=form)
 
 @app.route('/post/new', methods=['POST', 'GET'])
-@login_required # route can only be accesed when the user is loged in
+@login_required # route can only be accesed when the user is logged in
 def new_post():
     form = PostForm()
     if form.validate_on_submit():
