@@ -4,17 +4,17 @@
         <img class="rounded-circle article-img" src="{{ url_for('static', filename='profile_pics/' + post.author.image_file) }}">
         <div class="media-body">
         <div class="article-metadata">
-            <a class="mr-2" href="{{ url_for('user_posts', username=post.author.username) }}">{{ post.author.username }}</a>
-            <small class="text-muted">{{ post.date_posted.strftime('%Y-%m-%d') }}</small>
-            {% if post.author == current_user %}
+            <a class="mr-2" href="{{ url_for('user_posts', username=post.author.username) }}">{{ post.author.username }}</a> <!-- shows the username of the post author -->
+            <small class="text-muted">{{ post.date_posted.strftime('%Y-%m-%d') }}</small> <!-- shows the time the post was posted -->
+            {% if post.author == current_user %} <!-- gets executed when the current user has written the post -->
                 <div>
-                    <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{{ url_for('update_post', post_id=post.id) }}">Update</a>
-                    <button type="button" class="btn btn-danger btn-sm m-1" data-toggle="modal" data-target="#deleteModal">Delete</button>
+                    <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{{ url_for('update_post', post_id=post.id) }}">Update</a> <!-- shows the update button-->
+                    <button type="button" class="btn btn-danger btn-sm m-1" data-toggle="modal" data-target="#deleteModal">Delete</button> <!-- shows the delete button-->
                 </div>
             {% endif %}
         </div>
-        <h2 class="article-title">{{ post.title }}</h2>
-        <p class="article-content">{{ post.content }}</p>
+        <h2 class="article-title">{{ post.title }}</h2> <!-- shows the post title -->
+        <p class="article-content">{{ post.content }}</p> <!-- shows the post content -->
         </div>
     </article>
     <!-- Modal -->

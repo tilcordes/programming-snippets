@@ -28,7 +28,7 @@ def register():
         hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8') # hashes the password which was submitted in the form
         user = User(username=form.username.data, email=form.email.data, password=hashed_password) # creates the User
         db.session.add(user) # adds the User to the database
-        db.session.commit() # stores the added data in the database
+        db.session.commit() # commits the changes to the database
         flash('Your account has been created! You are now able to log in', 'success') # send a message to the template with the category 'success'
         return redirect(url_for('login'))
     return render_template('register.html', title='Register', form=form)
@@ -76,10 +76,10 @@ def account():
             current_user.image_file = picture_file # updates the profile picture
         current_user.username = form.username.data # updates the username
         current_user.email = form.email.data # updates the email
-        db.session.commit() # stores the updated data in the database
+        db.session.commit() # commits the changes to the database
         flash('Your account has been updated!', 'success') # send a message to the template with the category 'success'
         return redirect(url_for('account'))
-    elif request.method == 'GET': # is needed when the site gets reloaded
+    elif request.method == 'GET': # is needed to put in the current values into the form
         form.username.data = current_user.username # puts the current username into the form
         form.email.data = current_user.email # puts the current email into the form
     image_file = url_for('static', filename='profile_pics/' + current_user.image_file) # profil picture of the user
@@ -89,45 +89,45 @@ def account():
 @login_required # route can only be accesed when the user is logged in
 def new_post():
     form = PostForm()
-    if form.validate_on_submit():
-        post = Post(title=form.title.data, content=form.content.data, author=current_user)
-        db.session.add(post)
-        db.session.commit()
+    if form.validate_on_submit(): # gets executed when the form gets submitted
+        post = Post(title=form.title.data, content=form.content.data, author=current_user) # creates a new post
+        db.session.add(post) # adds the User to the database
+        db.session.commit() # commits the changes to the database
         flash('Your post has been created!', 'success')
         return redirect(url_for('home'))
     return render_template('create_post.html', title='New Post', form=form, legend='New Post')
 
 @app.route('/post/<int:post_id>')
 def post(post_id):
-    post = Post.query.get_or_404(post_id)
+    post = Post.query.get_or_404(post_id) # shows the post if it exists or it shows 404 error if it doesnt exist
     return render_template('post.html', title=post.title, post=post)
 
 @app.route('/post/<int:post_id>/update', methods=['POST', 'GET'])
 @login_required
 def update_post(post_id):
-    post = Post.query.get_or_404(post_id)
-    if post.author != current_user:
-        abort(403)
+    post = Post.query.get_or_404(post_id) # gets the post if it exists or it shows 404 error if it doesnt exist
+    if post.author != current_user: # gets executed when the current user is not the author of the post
+        abort(403) # returns an error (403 = forbidden route)
     form = PostForm()
-    if form.validate_on_submit():
-        post.title = form.title.data
-        post.content = form.content.data
-        db.session.commit()
+    if form.validate_on_submit(): # gets executed when the form gets submitted
+        post.title = form.title.data # updates the title
+        post.content = form.content.data # updates the content
+        db.session.commit() # commits the changes to the database
         flash('Your post has been updatad!', 'success')
         return redirect(url_for('post', post_id=post.id))
-    elif request.method == 'GET':
-        form.title.data = post.title
-        form.content.data = post.content
+    elif request.method == 'GET': # is needed to put in the current values into the form
+        form.title.data = post.title # puts the current username into the form
+        form.content.data = post.content # puts the current email into the form
     return render_template('create_post.html', title='Update Post', form=form, legend='Update Post')
 
 @app.route('/post/<int:post_id>/delete', methods=['POST'])
 @login_required
 def delete_post(post_id):
-    post = Post.query.get_or_404(post_id)
-    if post.author != current_user:
-        abort(403)
-    db.session.delete(post)
-    db.session.commit()
+    post = Post.query.get_or_404(post_id) # gets the post if it exists or it shows 404 error if it doesnt exist
+    if post.author != current_user: # gets executed when the current user is not the author of the post
+        abort(403) # returns an error (403 = forbidden route)
+    db.session.delete(post) # deletes the post
+    db.session.commit() # commits the changes to the database
     flash('Your post has been deleted!', 'success')
     return redirect(url_for('home'))
 
