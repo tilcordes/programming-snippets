@@ -11,8 +11,8 @@ from flask_mail import Message
 @app.route('/')
 @app.route('/home')
 def home():
-    page = request.args.get('page', 1, type=int)
-    posts = Post.query.order_by(Post.date_posted.desc()).paginate(page=page, per_page=5)
+    page = request.args.get('page', 1, type=int) # gets the current page (default is 1)
+    posts = Post.query.order_by(Post.date_posted.desc()).paginate(page=page, per_page=5) # orders the posts by the date and paginates them
     return render_template('home.html', title='Home', posts=posts) # renders the template 'home.html' and provides the variables 'title' and 'posts' for the template
 
 @app.route('/about')
@@ -97,12 +97,12 @@ def new_post():
         return redirect(url_for('home'))
     return render_template('create_post.html', title='New Post', form=form, legend='New Post')
 
-@app.route('/post/<int:post_id>')
+@app.route('/post/<int:post_id>') # dynamic url with the variable 'post_id'
 def post(post_id):
     post = Post.query.get_or_404(post_id) # shows the post if it exists or it shows 404 error if it doesnt exist
     return render_template('post.html', title=post.title, post=post)
 
-@app.route('/post/<int:post_id>/update', methods=['POST', 'GET'])
+@app.route('/post/<int:post_id>/update', methods=['POST', 'GET']) # dynamic url with the variable 'post_id'
 @login_required
 def update_post(post_id):
     post = Post.query.get_or_404(post_id) # gets the post if it exists or it shows 404 error if it doesnt exist
@@ -120,7 +120,7 @@ def update_post(post_id):
         form.content.data = post.content # puts the current email into the form
     return render_template('create_post.html', title='Update Post', form=form, legend='Update Post')
 
-@app.route('/post/<int:post_id>/delete', methods=['POST'])
+@app.route('/post/<int:post_id>/delete', methods=['POST']) # dynamic url with the variable 'post_id'
 @login_required
 def delete_post(post_id):
     post = Post.query.get_or_404(post_id) # gets the post if it exists or it shows 404 error if it doesnt exist
@@ -131,13 +131,13 @@ def delete_post(post_id):
     flash('Your post has been deleted!', 'success')
     return redirect(url_for('home'))
 
-@app.route('/user/<string:username>')
+@app.route('/user/<string:username>') # dynamic url with the variable 'username'
 def user_posts(username):
-    page = request.args.get('page', 1, type=int)
-    user = User.query.filter_by(username=username).first_or_404()
+    page = request.args.get('page', 1, type=int) # gets the current page (default is 1)
+    user = User.query.filter_by(username=username).first_or_404() # gets the user if it exists or it shows 404 error if it doesnt exist
     posts = Post.query.filter_by(author=user)\
         .order_by(Post.date_posted.desc())\
-        .paginate(page=page, per_page=5)
+        .paginate(page=page, per_page=5) # gets the posts of the user, oders them by the date and paginates them (\ can be used to split a command)
     return render_template('user_posts.html', title='User', posts=posts, user=user)
 
 def send_reset_email(user):
