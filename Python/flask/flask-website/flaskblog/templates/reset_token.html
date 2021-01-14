@@ -2,38 +2,38 @@
 {% block content %}
     <div class="content-section">
         <form method="POST" action="">
-            {{ form.hidden_tag() }}
+            {{ form.hidden_tag() }} <!-- adds csrf-token. Very important! --> 
             <fieldset class="form-group">
                 <legend class="border-bottom mb-4">Reset Password</legend>
                 <div class="form-group">
-                    {{ form.password.label(class="form-control-label") }}
-                    {% if form.password.errors %}
-                        {{ form.password(class="form-control form-control-lg is-invalid") }}
+                    {{ form.password.label(class="form-control-label") }} <!-- shows the label of the password field -->
+                    {% if form.password.errors %} <!-- only gets executed if any errors occur -->
+                        {{ form.password(class="form-control form-control-lg is-invalid") }} <!-- shows the password field with red outline -->
                         <div class="invalid-feedback">
                             {% for error in form.password.errors %}
-                                <span>{{ error }}</span>
+                                <span>{{ error }}</span> <!-- shows all the errors -->
                             {% endfor %}
                         </div>
                     {% else %}
-                        {{ form.password(class="form-control form-control-lg") }}
+                        {{ form.password(class="form-control form-control-lg") }} <!-- shows the password field -->
                     {% endif %}
                 </div>
                 <div class="form-group">
-                    {{ form.confirm_password.label(class="form-control-label") }}
-                    {% if form.confirm_password.errors %}
-                        {{ form.confirm_password(class="form-control form-control-lg is-invalid") }}
+                    {{ form.confirm_password.label(class="form-control-label") }} <!-- shows the label of the confirm_password field -->
+                    {% if form.confirm_password.errors %} <!-- only gets executed if any errors occur -->
+                        {{ form.confirm_password(class="form-control form-control-lg is-invalid") }} <!-- shows the confirm_password field with red outline -->
                         <div class="invalid-feedback">
                             {% for error in form.confirm_password.errors %}
-                                <span>{{ error }}</span>
+                                <span>{{ error }}</span> <!-- shows all the errors -->
                             {% endfor %}
                         </div>
                     {% else %}
-                        {{ form.confirm_password(class="form-control form-control-lg") }}
+                        {{ form.confirm_password(class="form-control form-control-lg") }} <!-- shows the confirm_password field -->
                     {% endif %}
                 </div>
             </fieldset>
             <div class="form-group">
-                {{ form.submit(class="btn btn-outline-info") }}
+                {{ form.submit(class="btn btn-outline-info") }} <!-- shows the submit button -->
             </div>
         </form>
     </div>

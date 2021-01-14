@@ -141,40 +141,40 @@ def user_posts(username):
     return render_template('user_posts.html', title='User', posts=posts, user=user)
 
 def send_reset_email(user):
-    token = user.get_reset_token()
-    msg = Message('Password Reset Request', sender='noreply@demo.com', recipients=[user.email])
+    token = user.get_reset_token() # creates a token for the user
+    msg = Message('Password Reset Request', sender='noreply@demo.com', recipients=[user.email]) # creates a mail
     msg.body = f'''To reset your password, visit the following link:
 {url_for('reset_token', token=token, _external=True)}
 
-If you did not made this request then simply ignore this email and no changes will be made.
-'''
-    mail.send(msg)
+If you did not make this request then simply ignore this email and no changes will be made.
+''' # body of the mail in a multiline string
+    mail.send(msg) # sends the mail
 
 @app.route('/reset_password', methods=['POST', 'GET'])
 def reset_request():
-    if current_user.is_authenticated:
+    if current_user.is_authenticated: # gets executed when the user is already loged in
         return redirect(url_for('home'))
     form = RequestResetForm()
-    if form.validate_on_submit():
-        user = User.query.filter_by(email=form.email.data).first()
-        send_reset_email(user)
+    if form.validate_on_submit(): # gets executed when the form gets submitted
+        user = User.query.filter_by(email=form.email.data).first() # gets the user by the email
+        send_reset_email(user) # sends a reset mail to the user
         flash('An email has been sent with instructions to reset your password.', 'info')
         return redirect(url_for('login'))
     return render_template('reset_request.html', title='Reset Password', form=form)
 
 @app.route('/reset_password/<token>', methods=['POST', 'GET'])
 def reset_token(token):
-    if current_user.is_authenticated:
+    if current_user.is_authenticated: # gets executed when the user is already loged in
         return redirect(url_for('home'))
-    user = User.verify_reset_token(token)
-    if user is None:
+    user = User.verify_reset_token(token) # gets the user out of the token
+    if user is None: # gets executed when token was invalid
         flash('That is an invalid or expired token', 'warning')
         return redirect(url_for('reset_request'))
     form = ResetPasswordForm()
-    if form.validate_on_submit():
-        hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
-        user.password = hashed_password
-        db.session.commit()
+    if form.validate_on_submit(): # gets executed when the form gets submitted
+        hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8') # generates the password hash
+        user.password = hashed_password # changes the password of the user to the new one
+        db.session.commit() # commits the changes to the database
         flash('Your password has been updated! You are now able to log in', 'success')
         return redirect(url_for('login'))
     return render_template('reset_token.html', title='Reset Password', form=form)
