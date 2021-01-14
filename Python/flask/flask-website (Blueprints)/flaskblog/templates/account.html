@@ -1,0 +1,57 @@
+{% extends "layout.html" %}
+{% block content %}
+    <div class="content-section">
+      <div class="media">
+        <img class="rounded-circle account-img" src="{{ image_file }}"> <!-- shows the profile picture of the user-->
+        <div class="media-body">
+          <h2 class="account-heading">{{ current_user.username }}</h2> <!-- shows the username of the user-->
+          <p class="text-secondary">{{ current_user.email }}</p> <!-- shows the email of the user-->
+        </div>
+      </div>
+        <form method="POST" action="" enctype="multipart/form-data">
+            {{ form.hidden_tag() }} <!-- adds csrf-token. Very important! --> 
+            <fieldset class="form-group">
+                <legend class="border-bottom mb-4">Account Info</legend>
+                <div class="form-group">
+                    {{ form.username.label(class="form-control-label") }} <!-- shows the label of the username field -->
+
+                    {% if form.username.errors %} <!-- only gets executed if any errors occur -->
+                        {{ form.username(class="form-control form-control-lg is-invalid") }} <!-- shows the username field with red outline -->
+                        <div class="invalid-feedback">
+                            {% for error in form.username.errors %}
+                                <span>{{ error }}</span> <!-- shows all the errors -->
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.username(class="form-control form-control-lg") }} <!-- shows the username field -->
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    {{ form.email.label(class="form-control-label") }} <!-- shows the label of the email field -->
+                    {% if form.email.errors %} <!-- only gets executed if any errors occur -->
+                        {{ form.email(class="form-control form-control-lg is-invalid") }} <!-- shows the email field with red outline -->
+                        <div class="invalid-feedback">
+                            {% for error in form.email.errors %}
+                                <span>{{ error }}</span> <!-- shows all the errors -->
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.email(class="form-control form-control-lg") }} <!-- shows the email field -->
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    {{ form.picture.label() }} <!-- shows the label of the profile picture field -->
+                    {{ form.picture(class="form-control-file") }} <!-- shows the profile picture field -->
+                    {% if form.picture.errors %} <!-- only gets executed if any errors occur -->
+                        {% for error in form.picture.errors %}
+                            <span class="text-danger">{{ error }}</span></br> <!-- shows all the errors -->
+                        {% endfor %}
+                    {% endif %}
+                </div>
+            </fieldset>
+            <div class="form-group">
+                {{ form.submit(class="btn btn-outline-info") }} <!-- shows the submit button -->
+            </div>
+        </form>
+    </div>
+{% endblock content %}
