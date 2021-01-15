@@ -21,12 +21,14 @@ def create_app(config_class=Config):
     login_manager.init_app(app) # puts the app to the login_manager object
     mail.init_app(app) # puts the app to the mail object
 
-    from flaskblog.posts.routes import posts # needs to be imported so that the app can use the routes; needs to be imported after the app gets created (important!)
-    from flaskblog.users.routes import users # needs to be imported so that the app can use the routes; needs to be imported after the app gets created (important!)
-    from flaskblog.main.routes import main # needs to be imported so that the app can use the routes; needs to be imported after the app gets created (important!)
+    from flaskblog.posts.routes import posts # needs to be imported so that the app can use the blueprint; needs to be imported after the app gets created (important!)
+    from flaskblog.users.routes import users # needs to be imported so that the app can use the blueprint; needs to be imported after the app gets created (important!)
+    from flaskblog.main.routes import main # needs to be imported so that the app can use the blueprint; needs to be imported after the app gets created (important!)
+    from flaskblog.errors.handlers import errors # needs to be imported so that the app can use the blueprint; needs to be imported after the app gets created (important!)
 
     app.register_blueprint(posts) # registers the blueprint of posts
     app.register_blueprint(users) # registers the blueprint of users
     app.register_blueprint(main) # registers the blueprint of main
+    app.register_blueprint(errors) # registers the blueprint of errors
 
     return app
